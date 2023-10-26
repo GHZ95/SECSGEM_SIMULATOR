@@ -1,8 +1,13 @@
 package com.ran.serviceimpl;
 
-import java.math.BigInteger;
-import java.util.HashSet;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +18,7 @@ import com.ran.aio.SECSMsgUtil;
 import com.ran.aio.Server;
 import com.ran.bean.MsgType;
 import com.ran.controller.MainWindowController;
+import com.ran.cpmt.ConfigBean;
 import com.ran.cpmt.MsgDirection;
 import com.ran.river.NotifyBus;
 import com.ran.river.SecsEvent;
@@ -27,6 +33,9 @@ public class MsgBridgeImpl implements MsgBridge {
 	@Autowired
 	private Server serverHandle;
 	
+	@Autowired
+	private ConfigBean configBean;
+	
 	
 	private int sysByte;
 	// msgmainbus
@@ -36,10 +45,13 @@ public class MsgBridgeImpl implements MsgBridge {
 	// secs io channel
 
 	// T3 TIMEOUT QUEUE
-	private Set<Integer> sendSet;
+	//key:systemByte value: datetime-long
+	private Map<String,Date> sendMap;
 
 	// T6 TIMEOUT QUEUE
 
+
+	
 	@Override
 	public boolean sendMsg(SECSMsg secsMsg) {
 		// TODO Auto-generated method stub
@@ -71,7 +83,7 @@ public class MsgBridgeImpl implements MsgBridge {
 			header.setSystemByte(sb.toString());
 			
 			msgDirection = MsgDirection.PO;
-			sendSet.add(sysByte);
+			sendMap.put(sb.toString(), new Date());
 		}
 
 		// length byte
@@ -95,10 +107,11 @@ public class MsgBridgeImpl implements MsgBridge {
 		// TODO Auto-generated method stub
 		String msgStr = secsMsg.toString();
 		MsgDirection msgDirection = MsgDirection.PI;
-		int sysByte =  new BigInteger(secsMsg.getHeader().getSystemByte(), 16).intValue();
-		if(sendSet.contains(sysByte)) {
+		//int sysByte =  new BigInteger(secsMsg.getHeader().getSystemByte(), 16).intValue();
+		String sysByte = secsMsg.getHeader().getSystemByte();
+		if(sendMap.containsKey(sysByte)) {
 			
-			sendSet.remove(sysByte);
+			sendMap.remove(sysByte);
 			msgDirection = MsgDirection.SI;
 		}
 		mainWindowController.showMainArea("["+ msgDirection+"]RECEIVE-" + msgStr, MsgType.NORMAL);
@@ -109,7 +122,31 @@ public class MsgBridgeImpl implements MsgBridge {
 	public MsgBridgeImpl() {
 		// TODO Auto-generated constructor stub
 		sysByte = 0;
-		sendSet = new HashSet<Integer>();
+		sendMap = new HashMap<String, Date>();
+		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+		int initialDelay = 0; // 初始延迟时间为0秒
+		int period = 50; // 间隔时间为50 ms
+		
+		scheduler.scheduleAtFixedRate(()->{
+			Set<String> sysByteSet = sendMap.keySet();
+			Iterator<String> ite = sysByteSet.iterator();
+			while(ite.hasNext()) {
+				int t3 = Integer.parseInt(configBean.getInnerConfig().getT3Timer())*1000;
+				String key  = ite.next();
+				Date now = new Date();
+				Date logDate = sendMap.get(key);
+				int interval = (int) (now.getTime() - logDate.getTime());
+				//compare time  > = t3 timer.
+				if(interval>= t3) {
+					
+					System.out.println("Msg sysByte:"+key+" have T3 Timeout!");
+					ite.remove();
+				}
+				
+			}
+
+		}, initialDelay, period, TimeUnit.MILLISECONDS);
+		
 	}
 
 	private byte[] getbyteFromByte(Byte[] boxByteArr) {
