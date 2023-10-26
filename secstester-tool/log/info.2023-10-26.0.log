@@ -1,0 +1,138 @@
+2023-10-26 10:02:00 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 6252 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-26 10:02:00 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-26 10:02:00 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@7866d4f0: startup date [Thu Oct 26 10:02:00 CST 2023]; root of context hierarchy
+2023-10-26 10:02:02 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 2.874 seconds (JVM running for 4.637)
+2023-10-26 10:09:48 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 17016 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-26 10:09:48 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-26 10:09:48 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@758b04df: startup date [Thu Oct 26 10:09:48 CST 2023]; root of context hierarchy
+2023-10-26 10:09:50 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 2.551 seconds (JVM running for 4.141)
+2023-10-26 11:02:15 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 17876 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-26 11:02:15 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-26 11:02:15 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@3a883c4a: startup date [Thu Oct 26 11:02:15 CST 2023]; root of context hierarchy
+2023-10-26 11:02:16 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.818 seconds (JVM running for 2.835)
+2023-10-26 11:02:24 [JavaFX Application Thread] INFO  o.s.c.a.AnnotationConfigApplicationContext - Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@3a883c4a: startup date [Thu Oct 26 11:02:15 CST 2023]; root of context hierarchy
+2023-10-26 11:03:16 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 21168 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-26 11:03:16 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-26 11:03:16 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@66fc74cf: startup date [Thu Oct 26 11:03:16 CST 2023]; root of context hierarchy
+2023-10-26 11:03:18 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.928 seconds (JVM running for 2.953)
+2023-10-26 11:03:42 [JavaFX Application Thread] INFO  o.s.c.a.AnnotationConfigApplicationContext - Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@66fc74cf: startup date [Thu Oct 26 11:03:16 CST 2023]; root of context hierarchy
+2023-10-26 14:59:34 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 12412 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-26 14:59:34 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-26 14:59:34 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@1e6d0b05: startup date [Thu Oct 26 14:59:34 CST 2023]; root of context hierarchy
+2023-10-26 14:59:35 [ForkJoinPool.commonPool-worker-1] WARN  o.s.c.a.AnnotationConfigApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'channelHandler': Unsatisfied dependency expressed through field 'msgBridgeImpl'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'msgBridgeImpl': Unsatisfied dependency expressed through field 'mainWindowController'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mainWindowController': Unsatisfied dependency expressed through field 'configBean'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'configBean': Unsatisfied dependency expressed through field 'innerConfig'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ams.bean.SimulatorConfig' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2023-10-26 14:59:35 [ForkJoinPool.commonPool-worker-1] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-10-26 14:59:35 [ForkJoinPool.commonPool-worker-1] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field innerConfig in com.ams.cpmt.ConfigBean required a bean of type 'com.ams.bean.SimulatorConfig' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.ams.bean.SimulatorConfig' in your configuration.
+
+2023-10-26 14:59:35 [ForkJoinPool.commonPool-worker-1] ERROR d.f.jfxsupport.AbstractJavaFxApplicationSupport - Failed to load spring application context: 
+java.util.concurrent.CompletionException: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'channelHandler': Unsatisfied dependency expressed through field 'msgBridgeImpl'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'msgBridgeImpl': Unsatisfied dependency expressed through field 'mainWindowController'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mainWindowController': Unsatisfied dependency expressed through field 'configBean'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'configBean': Unsatisfied dependency expressed through field 'innerConfig'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ams.bean.SimulatorConfig' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at java.util.concurrent.CompletableFuture.encodeThrowable(Unknown Source)
+	at java.util.concurrent.CompletableFuture.completeThrowable(Unknown Source)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.run(Unknown Source)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.exec(Unknown Source)
+	at java.util.concurrent.ForkJoinTask.doExec(Unknown Source)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(Unknown Source)
+	at java.util.concurrent.ForkJoinPool.runWorker(Unknown Source)
+	at java.util.concurrent.ForkJoinWorkerThread.run(Unknown Source)
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'channelHandler': Unsatisfied dependency expressed through field 'msgBridgeImpl'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'msgBridgeImpl': Unsatisfied dependency expressed through field 'mainWindowController'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mainWindowController': Unsatisfied dependency expressed through field 'configBean'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'configBean': Unsatisfied dependency expressed through field 'innerConfig'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ams.bean.SimulatorConfig' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:587)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:91)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:373)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1344)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:502)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:312)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:310)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:760)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:868)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:388)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:327)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1234)
+	at de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport.lambda$init$1(AbstractJavaFxApplicationSupport.java:124)
+	... 6 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'msgBridgeImpl': Unsatisfied dependency expressed through field 'mainWindowController'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mainWindowController': Unsatisfied dependency expressed through field 'configBean'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'configBean': Unsatisfied dependency expressed through field 'innerConfig'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ams.bean.SimulatorConfig' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:587)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:91)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:373)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1344)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:502)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:312)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:310)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1138)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1065)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:584)
+	... 24 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mainWindowController': Unsatisfied dependency expressed through field 'configBean'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'configBean': Unsatisfied dependency expressed through field 'innerConfig'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ams.bean.SimulatorConfig' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:587)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:91)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:373)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1344)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:502)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:312)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:310)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1138)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1065)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:584)
+	... 37 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'configBean': Unsatisfied dependency expressed through field 'innerConfig'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ams.bean.SimulatorConfig' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:587)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:91)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:373)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1344)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:502)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:312)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:310)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1138)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1065)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:584)
+	... 50 common frames omitted
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.ams.bean.SimulatorConfig' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1509)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1104)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1065)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:584)
+	... 63 common frames omitted
+2023-10-26 15:00:17 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 14148 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-26 15:00:17 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-26 15:00:17 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@1b63f342: startup date [Thu Oct 26 15:00:17 CST 2023]; root of context hierarchy
+2023-10-26 15:00:19 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.943 seconds (JVM running for 2.933)
+2023-10-26 15:00:26 [JavaFX Application Thread] INFO  o.s.c.a.AnnotationConfigApplicationContext - Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@1b63f342: startup date [Thu Oct 26 15:00:17 CST 2023]; root of context hierarchy
+2023-10-26 15:09:33 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 17020 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-26 15:09:33 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-26 15:09:33 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@76579db6: startup date [Thu Oct 26 15:09:33 CST 2023]; root of context hierarchy
+2023-10-26 15:09:35 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.976 seconds (JVM running for 2.984)
+2023-10-26 15:21:24 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 21344 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-26 15:21:24 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-26 15:21:24 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@29f4e38d: startup date [Thu Oct 26 15:21:24 CST 2023]; root of context hierarchy
+2023-10-26 15:21:25 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.93 seconds (JVM running for 2.948)

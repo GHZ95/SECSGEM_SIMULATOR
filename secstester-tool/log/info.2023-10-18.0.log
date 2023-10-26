@@ -1,0 +1,12 @@
+2023-10-18 09:03:30 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 11136 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-18 09:03:30 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-18 09:03:30 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@6f2ea827: startup date [Wed Oct 18 09:03:30 CST 2023]; root of context hierarchy
+2023-10-18 09:03:31 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.643 seconds (JVM running for 2.305)
+2023-10-18 09:06:35 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 11436 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-18 09:06:35 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-18 09:06:35 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@6d7b8f4d: startup date [Wed Oct 18 09:06:35 CST 2023]; root of context hierarchy
+2023-10-18 09:06:36 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.845 seconds (JVM running for 2.551)
+2023-10-18 09:11:08 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 804 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-18 09:11:08 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-18 09:11:08 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@92eef1a: startup date [Wed Oct 18 09:11:08 CST 2023]; root of context hierarchy
+2023-10-18 09:11:09 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 2.368 seconds (JVM running for 3.535)

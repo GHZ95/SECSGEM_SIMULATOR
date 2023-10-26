@@ -1,0 +1,29 @@
+2023-10-16 17:01:12 [JavaFX Application Thread] ERROR d.f.jfxsupport.AbstractJavaFxApplicationSupport - Failed to load application: 
+java.lang.IllegalStateException: Cannot load mainwindow
+	at de.felixroske.jfxsupport.AbstractFxmlView.loadSynchronously(AbstractFxmlView.java:162)
+	at de.felixroske.jfxsupport.AbstractFxmlView.ensureFxmlLoaderInitialized(AbstractFxmlView.java:177)
+	at de.felixroske.jfxsupport.AbstractFxmlView.getView(AbstractFxmlView.java:189)
+	at de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport.showView(AbstractJavaFxApplicationSupport.java:206)
+	at de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport.showInitialView(AbstractJavaFxApplicationSupport.java:185)
+	at de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport.lambda$start$6(AbstractJavaFxApplicationSupport.java:163)
+	at com.sun.javafx.application.PlatformImpl.lambda$null$5(PlatformImpl.java:295)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$6(PlatformImpl.java:294)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$null$4(WinApplication.java:185)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: javafx.fxml.LoadException: 
+/C:/eclipse-workspace/secstester-tool/target/classes/fxml/MainWindow.fxml
+
+	at javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2601)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2579)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2441)
+	at javafx.fxml.FXMLLoader.load(FXMLLoader.java:2409)
+	at de.felixroske.jfxsupport.AbstractFxmlView.loadSynchronously(AbstractFxmlView.java:160)
+	... 12 common frames omitted
+Caused by: java.lang.NullPointerException: null
+	at com.ams.controller.MainWindowController.updateTreeView(MainWindowController.java:134)
+	at com.ams.controller.MainWindowController.initialize(MainWindowController.java:351)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2548)
+	... 15 common frames omitted

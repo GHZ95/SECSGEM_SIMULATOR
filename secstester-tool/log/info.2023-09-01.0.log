@@ -1,0 +1,25 @@
+2023-09-01 09:33:48 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 20428 (started by ams0453 in C:\eclipse-workspace\eap-maintain-tool)
+2023-09-01 09:33:48 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-09-01 09:33:48 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4603fd9f: startup date [Fri Sep 01 09:33:48 CST 2023]; root of context hierarchy
+2023-09-01 09:33:49 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.664 seconds (JVM running for 2.437)
+2023-09-01 09:33:49 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-01 09:33:49 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-01 09:35:33 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 6076 (started by ams0453 in C:\eclipse-workspace\eap-maintain-tool)
+2023-09-01 09:35:33 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-09-01 09:35:33 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@189527b7: startup date [Fri Sep 01 09:35:33 CST 2023]; root of context hierarchy
+2023-09-01 09:35:34 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.602 seconds (JVM running for 2.336)
+2023-09-01 09:35:34 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-01 09:35:35 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-01 09:36:01 [JavaFX Application Thread] INFO  recommend - Trigger VNC null
+2023-09-01 09:36:31 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 21072 (started by ams0453 in C:\eclipse-workspace\eap-maintain-tool)
+2023-09-01 09:36:31 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-09-01 09:36:31 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@456f1f05: startup date [Fri Sep 01 09:36:31 CST 2023]; root of context hierarchy
+2023-09-01 09:36:32 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.707 seconds (JVM running for 2.45)
+2023-09-01 09:36:32 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-01 09:36:32 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-01 09:37:22 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 16612 (started by ams0453 in C:\eclipse-workspace\eap-maintain-tool)
+2023-09-01 09:37:22 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-09-01 09:37:22 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4b5d8b89: startup date [Fri Sep 01 09:37:22 CST 2023]; root of context hierarchy
+2023-09-01 09:37:23 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.631 seconds (JVM running for 2.356)
+2023-09-01 09:37:23 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-01 09:37:23 [JavaFX Application Thread] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.

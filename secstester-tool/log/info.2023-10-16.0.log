@@ -1,0 +1,34 @@
+2023-10-16 17:01:10 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 15188 (started by ams0453 in C:\eclipse-workspace\secstester-tool)
+2023-10-16 17:01:10 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
+2023-10-16 17:01:10 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@248b3715: startup date [Mon Oct 16 17:01:10 CST 2023]; root of context hierarchy
+2023-10-16 17:01:12 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.842 seconds (JVM running for 2.531)
+2023-10-16 17:01:12 [JavaFX Application Thread] ERROR d.f.jfxsupport.AbstractJavaFxApplicationSupport - Failed to load application: 
+java.lang.IllegalStateException: Cannot load mainwindow
+	at de.felixroske.jfxsupport.AbstractFxmlView.loadSynchronously(AbstractFxmlView.java:162)
+	at de.felixroske.jfxsupport.AbstractFxmlView.ensureFxmlLoaderInitialized(AbstractFxmlView.java:177)
+	at de.felixroske.jfxsupport.AbstractFxmlView.getView(AbstractFxmlView.java:189)
+	at de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport.showView(AbstractJavaFxApplicationSupport.java:206)
+	at de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport.showInitialView(AbstractJavaFxApplicationSupport.java:185)
+	at de.felixroske.jfxsupport.AbstractJavaFxApplicationSupport.lambda$start$6(AbstractJavaFxApplicationSupport.java:163)
+	at com.sun.javafx.application.PlatformImpl.lambda$null$5(PlatformImpl.java:295)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$6(PlatformImpl.java:294)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$null$4(WinApplication.java:185)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: javafx.fxml.LoadException: 
+/C:/eclipse-workspace/secstester-tool/target/classes/fxml/MainWindow.fxml
+
+	at javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2601)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2579)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2441)
+	at javafx.fxml.FXMLLoader.load(FXMLLoader.java:2409)
+	at de.felixroske.jfxsupport.AbstractFxmlView.loadSynchronously(AbstractFxmlView.java:160)
+	... 12 common frames omitted
+Caused by: java.lang.NullPointerException: null
+	at com.ams.controller.MainWindowController.updateTreeView(MainWindowController.java:134)
+	at com.ams.controller.MainWindowController.initialize(MainWindowController.java:351)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2548)
+	... 15 common frames omitted
+2023-10-16 17:01:13 [JavaFX Application Thread] INFO  o.s.c.a.AnnotationConfigApplicationContext - Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@248b3715: startup date [Mon Oct 16 17:01:10 CST 2023]; root of context hierarchy

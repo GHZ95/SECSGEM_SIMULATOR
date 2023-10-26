@@ -1,0 +1,30 @@
+spring:
+    datasource:
+        driver-class-name: org.sqlite.JDBC
+        url: jdbc:sqlite:C:/DBResource/TEST.db
+        #url: jdbc:sqlite::resource:static/sqlite/xy.db
+        username: 
+        password: 
+        validationQuery : SELECT 1 FROM DUAL
+    jmx: 
+        enabled: false
+    devtools:
+        restart:
+         enabled : true
+         additional-paths : src/main/java
+
+
+eap:
+ path: \\%s\c\test\%s
+ root: \\%s\c
+
+logging:
+    level:
+        root : info
+    file:
+        path: log
+javafx:
+    stage:
+        resizable: true
+    title: EMT
+

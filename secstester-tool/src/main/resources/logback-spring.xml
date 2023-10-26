@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+ 
+    <contextName>log-demo</contextName>
+    <!--    logging.file.path 为application.properties里的配置信息-->
+    <springProperty scope="context" name="logging.path" source="logging.file.path"/>
+    
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出（配色）：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%yellow(%d{yyyy-MM-dd HH:mm:ss}) %red([%thread]) %highlight(%-5level) %cyan(%logger{50}) - %magenta(%msg) %n
+            </pattern>
+            <!-- <charset>UTF-8</charset> -->
+        </encoder>
+    </appender>
+ 
+    <!--根据日志级别分离日志，分别输出到不同的文件-->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+ 
+<!--        error 日志是否在filieInfoLog里重复输出-->
+<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--            <level>ERROR</level>-->
+<!--            <onMatch>DENY</onMatch>-->
+<!--            <onMismatch>ACCEPT</onMismatch>-->
+<!--        </filter>-->
+ 
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--按时间保存日志 修改格式可以按小时、按天、月来保存-->
+            <fileNamePattern>${logging.path}/info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--保存时长 10天 %d{yyyy-MM-dd}-->
+            <MaxHistory>10</MaxHistory>
+            <!--文件大小-->
+            <maxFileSize>2MB</maxFileSize>
+            <!--总大小-->
+            <totalSizeCap>5MB</totalSizeCap>
+ 
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+    </appender>
+ 
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--按时间保存日志 修改格式可以按小时、按天、月来保存-->
+            <fileNamePattern>${logging.path}/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--保存时长 10天 %d{yyyy-MM-dd}-->
+            <MaxHistory>10</MaxHistory>
+            <!--文件大小-->
+            <maxFileSize>2MB</maxFileSize>
+            <totalSizeCap>5MB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+    </appender>
+ 
+    <root level="info">
+        <appender-ref ref="consoleLog"/>
+        <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="fileErrorLog"/>
+    </root>
+ 
+ 
+    <!--特殊功能单独appender 对制定类输出到特定Apperder-->
+    <appender name="CLASS-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--按时间保存日志 修改格式可以按小时、按天、月来保存-->
+            <fileNamePattern>${logging.path}/scheduler.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--保存时长 10天 %d{yyyy-MM-dd}-->
+            <MaxHistory>10</MaxHistory>
+            <!--文件大小-->
+            <maxFileSize>2MB</maxFileSize>
+            <totalSizeCap>5MB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+    </appender>
+    <!--这里的name和业务类中的getLogger中的字符串是一样的-->
+    <logger name="recommend" level="INFO" additivity="true">
+        <appender-ref ref="CLASS-APPENDER" />
+    </logger>
+ 
+</configuration>
