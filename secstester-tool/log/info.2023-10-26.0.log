@@ -147,3 +147,4 @@ Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No q
 2023-10-26 17:01:04 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Starting application on VDI-IT007 with PID 22212 (started by ams0453 in C:\Users\AMS0453\git\repository\secstester-tool)
 2023-10-26 17:01:04 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - No active profile set, falling back to default profiles: default
 2023-10-26 17:01:04 [ForkJoinPool.commonPool-worker-1] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@68ab49ae: startup date [Thu Oct 26 17:01:04 CST 2023]; root of context hierarchy
+2023-10-26 17:01:05 [ForkJoinPool.commonPool-worker-1] INFO  org.springframework.boot.SpringApplication - Started application in 1.936 seconds (JVM running for 2.974)

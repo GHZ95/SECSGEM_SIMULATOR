@@ -19,5 +19,10 @@ public class ConfigBean {
 		this.innerConfig = innerConfig;
 	}
 	
+	public ConfigBean() {
+		// TODO Auto-generated constructor stub
+	
+
+	}
 	
 }

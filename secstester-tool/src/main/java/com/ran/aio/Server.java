@@ -45,6 +45,7 @@ public class Server {
     	
     	if(serverSocket!=null || serverSocket.isOpen()) {
     		try {
+    			channelHandler.close();
 				serverSocket.close();
 				
 			} catch (IOException e) {
@@ -83,7 +84,7 @@ public class Server {
                    System.out.println("Accept new connection:" + clientAddr);
 
                    // 收到新的连接后，server 应该重新调用 accept 方法等待新的连接进来
-                   att.getServer().accept(att, this);
+                   //att.getServer().accept(att, this);
 
                    Attachment newAtt = new Attachment();
                    newAtt.setServer(serverSocket);

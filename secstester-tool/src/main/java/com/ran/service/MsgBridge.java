@@ -9,4 +9,6 @@ public interface MsgBridge {
 	
 	boolean receivedMsg(SECSMsg secsMsg);
 	
+	int getSysByte();
+	
 }

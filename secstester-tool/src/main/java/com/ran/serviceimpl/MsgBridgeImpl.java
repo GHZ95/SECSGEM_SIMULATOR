@@ -138,7 +138,7 @@ public class MsgBridgeImpl implements MsgBridge {
 				int interval = (int) (now.getTime() - logDate.getTime());
 				//compare time  > = t3 timer.
 				if(interval>= t3) {
-					
+					System.out.println();
 					System.out.println("Msg sysByte:"+key+" have T3 Timeout!");
 					ite.remove();
 				}
@@ -176,6 +176,10 @@ public class MsgBridgeImpl implements MsgBridge {
 			return firstPart;
 		}
 
+	}
+	public int getSysByte() {
+		sysByte = sysByte+1;
+		return sysByte;
 	}
 
 }

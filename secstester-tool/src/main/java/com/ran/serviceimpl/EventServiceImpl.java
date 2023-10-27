@@ -12,6 +12,7 @@ import com.ran.aio.SECSHeader;
 import com.ran.aio.SECSMsg;
 import com.ran.aio.SECSMsgUtil;
 import com.ran.aio.Server;
+import com.ran.cpmt.ConfigBean;
 import com.ran.river.SecsEvent;
 import com.ran.service.EventService;
 import com.ran.service.MsgBridge;
@@ -19,6 +20,9 @@ import com.ran.service.MsgBridge;
 @Service
 public class EventServiceImpl implements EventService{
 
+	@Autowired
+	private ConfigBean configBean;
+	
 	@Autowired
 	private MsgBridge msgBridgeImpl;
 	
@@ -50,8 +54,8 @@ public class EventServiceImpl implements EventService{
 		strQueue.add("List:2");
 		strQueue.add("BINARY[1]:00");
 		strQueue.add("List:2");
-		strQueue.add("A[8]:IvoryTsg");
-		strQueue.add("A[3]:1.0");
+		strQueue.add("A["+configBean.getInnerConfig().getMDLN().length()+"]:"+configBean.getInnerConfig().getMDLN());
+		strQueue.add("A["+configBean.getInnerConfig().getSwVer().length()+"]:"+configBean.getInnerConfig().getSwVer());
 		SECSMsg secsMsg = new SECSMsg();
 		SECSBody body = new SECSBody();
 		SECSHeader header = buildHeader(event);

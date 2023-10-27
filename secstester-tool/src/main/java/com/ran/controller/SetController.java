@@ -36,6 +36,10 @@ public class SetController  implements Initializable{
 	private TextField txtDeviceId;
 	
 	@FXML
+	private TextField txtSwVersion;
+	
+	
+	@FXML
 	private TextField txtT3Timer;
 	
 	@FXML
@@ -65,6 +69,8 @@ public class SetController  implements Initializable{
     	config.setDeviceId(deviceId);
     	config.setT3Timer(t3Timer);
     	config.setConnectionMode(connectionMode);
+    	
+    	config.setSwVer(txtSwVersion.getText());
     	
     	configBean.setInnerConfig(config);
     	

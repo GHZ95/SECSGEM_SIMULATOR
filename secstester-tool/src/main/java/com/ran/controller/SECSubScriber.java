@@ -7,6 +7,7 @@ import com.ran.aio.SECSHeader;
 import com.ran.aio.SECSMsg;
 import com.ran.aio.Server;
 import com.ran.aio.SessionType;
+import com.ran.cpmt.ConfigBean;
 import com.ran.river.BootEvent;
 import com.ran.river.SecsEvent;
 import com.ran.river.Subscriber;
@@ -21,6 +22,9 @@ public class SECSubScriber  extends Subscriber<SecsEvent>   {
 	
 	@Autowired
 	private EventService eventService;
+	
+	@Autowired
+	private ConfigBean configBean;
 
 	
 	@Override
@@ -48,6 +52,12 @@ public class SECSubScriber  extends Subscriber<SecsEvent>   {
 		case SelectReq:
 			sendSelectRsp(event);
 			break;
+			
+		case SelectRsp:
+			//notiry ui show connect
+			configBean.getInnerConfig().setConnectionStatus("CONN");
+			
+			break;
 		case DataMessage:
 			dataMessageHandle(event);
 			break;
@@ -61,8 +71,10 @@ public class SECSubScriber  extends Subscriber<SecsEvent>   {
 	private void sendSelectRsp(SecsEvent event) {
 		// TODO Auto-generated method stub
 		//Server.getInstance().getChannelHandler().writeChannelForTest(event.getMsg().getHeader().getBinArr());
-		serverHandle.getChannelHandler().writeChannelForTest(
+		boolean rtnFlag = serverHandle.getChannelHandler().writeChannelForReplySelect(
 				event.getMsg().getHeader().getBinArr());
+		if(rtnFlag)
+			configBean.getInnerConfig().setConnectionStatus("CONN");
 	}
 
 	private void dataMessageHandle(SecsEvent event) {

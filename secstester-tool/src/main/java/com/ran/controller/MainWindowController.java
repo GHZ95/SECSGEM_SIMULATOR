@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
 import com.ran.Main;
+import com.ran.aio.Client;
 import com.ran.aio.LinkSecsItem;
 import com.ran.aio.SECSBody;
 import com.ran.aio.SECSHeader;
@@ -23,8 +24,11 @@ import com.ran.aio.SECSMsg;
 import com.ran.aio.SECSMsgUtil;
 import com.ran.aio.Server;
 import com.ran.aio.SessionType;
+import com.ran.bean.ConnectionMode;
+import com.ran.bean.EAPConfig;
 import com.ran.bean.MsgType;
 import com.ran.cpmt.ConfigBean;
+import com.ran.cpmt.ConfigChangeListener;
 import com.ran.cpmt.OutputStreamByTextArea;
 import com.ran.cpmt.SenderMenu;
 import com.ran.river.NotifyBus;
@@ -36,6 +40,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -66,22 +71,24 @@ public class MainWindowController implements Initializable {
 
 	@Autowired
 	private ConfigBean configBean;
-	
+
 	@Autowired
 	private MsgBridge msgBridgeImpl;
-	
+
 	@Autowired
 	private Server serverHandle;
 
+	@Autowired
+	private Client clientHandle;
+
 	@FXML
 	private TextArea txtAreaReciver;
-	
+
 	@FXML
 	private TextArea txtAreaSender;
-	
+
 	@FXML
 	private TextArea txtAreaConsole;
-	
 
 	@FXML
 	private RadioButton rbByType;
@@ -94,18 +101,21 @@ public class MainWindowController implements Initializable {
 
 	@FXML
 	private ToggleGroup treeViewGroup;
-	
+
 	@FXML
 	private ScrollPane sp;
-	
+
 	@FXML
 	private Button btnConnect;
 
 	@FXML
 	private Label lblConnectionInfo;
-	
+
 	@Autowired
 	private SECSubScriber secsSubscriber;
+
+	@Autowired
+	private ConfigChangeListener lister;
 
 	@Autowired
 	private Environment ev;
@@ -138,11 +148,10 @@ public class MainWindowController implements Initializable {
 
 		txtAreaReciver.appendText(context);
 		txtAreaReciver.setScrollTop(Double.MAX_VALUE);
-		//sp.setVvalue(1.0);
-		//slowScrollToBottom(sp);
+		// sp.setVvalue(1.0);
+		// slowScrollToBottom(sp);
 	}
 
-	
 	public void showMainConsole(String context, MsgType msgType) {
 		Text text = new Text();
 		switch (msgType) {
@@ -173,114 +182,124 @@ public class MainWindowController implements Initializable {
 		txtAreaConsole.setScrollTop(Double.MAX_VALUE);
 
 	}
-	
-	private void slowScrollToBottom(ScrollPane scrollPane) {
-	    Animation animation = new Timeline(
-	        new KeyFrame(Duration.seconds(2),
-	            new KeyValue(scrollPane.vvalueProperty(), 1)));
-	    animation.play();
-	}
-	
-	
-	
 
+	private void slowScrollToBottom(ScrollPane scrollPane) {
+		Animation animation = new Timeline(
+				new KeyFrame(Duration.seconds(2), new KeyValue(scrollPane.vvalueProperty(), 1)));
+		animation.play();
+	}
 
 	public void showSettingView(Event event) throws IOException {
 		Main.showView(SettingView.class, Modality.NONE);
 
 	}
-	
-	
+
 	public void doAutoReply(Event event) {
-		
-		
+
 	}
-	
+
 	public void doConnect(Event event) {
-		
-		
-		
-		
-		//Server serverHandle = Server.getInstance();
-		if(!serverHandle.serverIsOpen()) {
+
+		// Server serverHandle = Server.getInstance();
+		if (!serverHandle.serverIsOpen()) {
 			try {
-				serverHandle.serverBoot(8878);
+				ConnectionMode mode = configBean.getInnerConfig().getConnectionMode();
+				if (mode == ConnectionMode.PASSIVE) {
+					// passive
+					serverHandle.serverBoot(Integer.parseInt(configBean.getInnerConfig().getPortLocal()));
+
+				} else {// active
+					clientHandle.clientBoot(configBean.getInnerConfig().getIpRemote(),
+							Integer.parseInt(configBean.getInnerConfig().getPortRemote()));
+
+				}
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			btnConnect.setText("DIS");
-			lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.GREEN,null,null)));
-		}else {
-			
+			lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
+		} else {
+
 			serverHandle.serverStop();
 			btnConnect.setText("Connect");
-			lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.GRAY,null,null)));
+			lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
 		}
-		
-		
+
 	}
 
-	
-	
+	public void changeConnectStatus(String mark) {
+		Platform.runLater(() -> {
+
+			// use java fx thread to update....
+
+			if ("DIS".equals(mark)) {
+				btnConnect.setText("Connect");
+				lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+
+			} else {
+				btnConnect.setText("DisConnect");
+
+				lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.GREEN, null, null)));
+			}
+
+		});
+	}
 
 	private void secsSend(ActionEvent event) {
 		// TODO Auto-generated method stub
 		int from = txtAreaSender.getCaretPosition();
-		//txtAreaSender.selectRange(from, to);
+		// txtAreaSender.selectRange(from, to);
 		String wholeStr = txtAreaSender.getText();
 		String secsMsgArr[] = wholeStr.split("\\n\\n");
 		boolean needReply = false;
-		int beforeSize= 0 ;
+		int beforeSize = 0;
 		int localSize = 0;
 		int targetAnchor = -1;
-		for(int i =0 ; i< secsMsgArr.length;i++) {
-			localSize =beforeSize+ secsMsgArr[i].length();
-			if(from>=beforeSize && from<= localSize)
-			{
+		for (int i = 0; i < secsMsgArr.length; i++) {
+			localSize = beforeSize + secsMsgArr[i].length();
+			if (from >= beforeSize && from <= localSize) {
 				targetAnchor = i;
-				//beforeSize = beforeSize +(2*i);
-				//localSize  = localSize+(2*i);
+				// beforeSize = beforeSize +(2*i);
+				// localSize = localSize+(2*i);
 				break;
-				
+
 			}
 			beforeSize = +localSize + 2;
-		} 
-		if(targetAnchor!= -1) {
-		//System.out.println(secsMsgArr[targetAnchor]);
-		txtAreaSender.selectRange(beforeSize, localSize);
 		}
-		
-		
-		
-		//parse secs msg
+		if (targetAnchor != -1) {
+			// System.out.println(secsMsgArr[targetAnchor]);
+			txtAreaSender.selectRange(beforeSize, localSize);
+		}
+
+		// parse secs msg
 		String originalSecsStr = secsMsgArr[targetAnchor];
-		
-		//get stream function.
+
+		// get stream function.
 		String streamFunctionReg = "(\\d|S|s)(\\d+)(\\d|F|f)(\\d+ )";
-	
 
 		Pattern r = Pattern.compile(streamFunctionReg);
 		Matcher m = r.matcher(originalSecsStr);
-		
-		if(!m.find()) {
+
+		if (!m.find()) {
 			System.out.println("Can't find stream function.");
 			return;
 		}
-		
+
 		String streamFunction[] = m.group().split("F");
-		int streamNo = Integer.parseInt( streamFunction[0].replace("S", "").trim());
-		int functionNo = Integer.parseInt( streamFunction[1].trim());
-		
-		needReply = functionNo%2 ==0? false: true;
-		
+		int streamNo = Integer.parseInt(streamFunction[0].replace("S", "").trim());
+		int functionNo = Integer.parseInt(streamFunction[1].trim());
+
+		needReply = functionNo % 2 == 0 ? false : true;
+
 		Queue<String> originalQueue = SECSMsgUtil.getInstance().parseStrMsgToQueue(originalSecsStr);
-		
-		if(originalQueue==null) {
+
+		if (originalQueue == null) {
 			System.out.println("Parse SECS message fail.");
-		}else {
-			SECSMsg secsMsg=new SECSMsg();
-			//header
+		} else {
+			SECSMsg secsMsg = new SECSMsg();
+			// header
 			SECSHeader header = new SECSHeader();
 			header.setDeviceId(0);
 			header.setFunctionNo(functionNo);
@@ -291,32 +310,30 @@ public class MainWindowController implements Initializable {
 			header.setsType(SessionType.DataMessage);
 			header.setSystemByte("FFFFFFFF");
 			secsMsg.setHeader(header);
-			
-			//body
-			if(originalQueue.size()!=0) {
-			SECSBody body = new SECSBody();
-			Queue<String> copyQueue = new LinkedBlockingQueue<String>(originalQueue);
-			body.setOriginQueue(copyQueue);
-			LinkSecsItem secsBody =SECSMsgUtil.getInstance().buildSecs(originalQueue);
-			body.setRootItem(secsBody);
-			secsMsg.setBody(body);
+
+			// body
+			if (originalQueue.size() != 0) {
+				SECSBody body = new SECSBody();
+				Queue<String> copyQueue = new LinkedBlockingQueue<String>(originalQueue);
+				body.setOriginQueue(copyQueue);
+				LinkSecsItem secsBody = SECSMsgUtil.getInstance().buildSecs(originalQueue);
+				body.setRootItem(secsBody);
+				secsMsg.setBody(body);
 			}
-			
+
 			msgBridgeImpl.sendMsg(secsMsg);
-		
+
 		}
-		
+
 	}
-	
-	
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		NotifyBus.INSTANCE.addSubscriber(secsSubscriber);
-		
+
 		txtAreaSender.setContextMenu(SenderMenu.getInstance());
-		
+
 		SenderMenu.getInstance().setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -325,17 +342,33 @@ public class MainWindowController implements Initializable {
 				}
 
 				else {
-					//secslocation(event);
+					// secslocation(event);
 				}
 			}
 
-			
 		});
-		
-	
+
+		configBean.getInnerConfig().addPropertyChangeListener(lister);
+
 		PrintStream ps = new PrintStream(new OutputStreamByTextArea(txtAreaConsole));
 		System.setOut(ps);
-	    System.setErr(ps);
+		System.setErr(ps);
+	}
+
+	public void changeIpStr() {
+		// TODO Auto-generated method stub
+		Platform.runLater(() -> {
+			configBean.getInnerConfig();
+			String tmp = configBean.getInnerConfig().getIpLocal() + ":" + configBean.getInnerConfig().getPortLocal()
+					+ " <-> " + configBean.getInnerConfig().getIpRemote() + ":"
+					+ configBean.getInnerConfig().getPortRemote();
+
+			// lblConnectionInfo.setBackground(new Background(new
+			// BackgroundFill(Color.GREEN,null,null)));
+			lblConnectionInfo.setText(tmp);
+
+		});
+
 	}
 
 }

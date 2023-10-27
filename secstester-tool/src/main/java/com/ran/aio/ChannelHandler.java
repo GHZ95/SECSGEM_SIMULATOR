@@ -1,5 +1,6 @@
 package com.ran.aio;
 
+import java.io.IOException;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
@@ -10,6 +11,7 @@ import java.util.concurrent.Future;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ran.cpmt.ConfigBean;
 import com.ran.service.MsgBridge;
 
 @Service
@@ -18,6 +20,9 @@ public class ChannelHandler implements CompletionHandler<Integer, Attachment> {
 	@Autowired
 	private MsgBridge msgBridgeImpl;
 
+	@Autowired
+	private ConfigBean configBean;
+	
 	Attachment attachment;
 
 	@Override
@@ -42,7 +47,7 @@ public class ChannelHandler implements CompletionHandler<Integer, Attachment> {
 			lenBuffer.put(bytes);
 			lenBuffer.flip();
 			long msgLen = lenBuffer.getLong();
-			System.out.println("BodyLen:" + msgLen);
+			
 
 			while (headerBuffer.hasRemaining())
 				readChannel(att.getClient(), headerBuffer);
@@ -57,6 +62,7 @@ public class ChannelHandler implements CompletionHandler<Integer, Attachment> {
 
 				System.out.print(bytes2HexString(i));
 			}
+			System.out.println();
 
 	
 
@@ -157,8 +163,15 @@ public class ChannelHandler implements CompletionHandler<Integer, Attachment> {
 	@Override
 	public void failed(Throwable t, Attachment att) {
 		System.out.println("Connction OFF.");
+		
+		configBean.getInnerConfig().setConnectionStatus("DIS");
 	}
 
+	public void close() {
+		
+		try { attachment.getClient().close(); } catch (IOException e) { }
+	}
+	
 	public boolean writeChannel(byte[] arr) {
 		boolean rtnFlag = true;
 		AsynchronousSocketChannel channel = attachment.getClient();
@@ -184,8 +197,72 @@ public class ChannelHandler implements CompletionHandler<Integer, Attachment> {
 		return rtnFlag;
 	}
 
-	public void writeChannelForTest(byte[] arr) {
+	public boolean writeChannelForRqstSelect(AsynchronousSocketChannel channel) {
 
+		boolean rtnFlag = true;
+		//AsynchronousSocketChannel channel = attachment.getClient();
+		ByteBuffer buffer = ByteBuffer.allocate(14);
+		long len = 10L;
+
+		buffer.put((byte) (len >> 24));
+		buffer.put((byte) (len >> 16));
+		buffer.put((byte) (len >> 8));
+		buffer.put((byte) (len));
+
+		byte replySelect[] = new byte[10];
+		
+
+	
+		replySelect[0] = (byte) 0x0;
+		replySelect[1] = (byte) 0x0;
+		replySelect[2] = (byte) 0x0;
+		replySelect[2] = (byte) 0x0;
+
+		replySelect[3] = (byte) 0x0;
+	
+		replySelect[4] = (byte) 0;
+	
+		replySelect[5] = (byte) 1;
+
+		int sysInt = msgBridgeImpl.getSysByte();
+		
+	
+		replySelect[9] = (byte) (sysInt & 0xff);
+		replySelect[8] = (byte) (sysInt >> 8);
+		replySelect[7] = (byte) (sysInt >> 16);
+		replySelect[6] = (byte) (sysInt >> 24);
+
+		
+
+		buffer.put(replySelect);
+		((Buffer) buffer).flip();
+
+		System.out.println();
+		while (buffer.hasRemaining()) {
+			Future<Integer> future = channel.write(buffer);
+
+			try {
+				int w = future.get().intValue();
+
+				if (w <= 0) {
+					System.out.println("Future =" + w);
+					rtnFlag = false;
+				}
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				rtnFlag = false;
+			}
+		}
+		return rtnFlag;
+	}
+
+	
+	
+	
+	public boolean writeChannelForReplySelect(byte[] arr) {
+
+		boolean rtnFlag = true;
 		AsynchronousSocketChannel channel = attachment.getClient();
 		ByteBuffer buffer = ByteBuffer.allocate(14);
 		long len = 10L;
@@ -232,15 +309,15 @@ public class ChannelHandler implements CompletionHandler<Integer, Attachment> {
 
 				if (w <= 0) {
 					System.out.println("Future =" + w);
+					rtnFlag = false;
 				}
-			} catch (InterruptedException e) {
+			} catch (InterruptedException | ExecutionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				rtnFlag = false;
 			}
 		}
+		return rtnFlag;
 	}
 
 	public void writeChannelForSend(AsynchronousSocketChannel channel, byte[] header, byte[] body) {

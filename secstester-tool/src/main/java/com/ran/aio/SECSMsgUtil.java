@@ -594,10 +594,10 @@ public class SECSMsgUtil {
 		//int systemByte = Integer.decode(header.getSystemByte());
 		
 		int systemByte = new BigInteger(header.getSystemByte(), 16).intValue();
-		arr[6] =(byte) (systemByte & 0xff);
-		arr[7] =(byte) (systemByte >> 8);
-		arr[8] =(byte) (systemByte >> 16);
-		arr[9] =(byte) (systemByte >> 24);
+		arr[9] =(byte) (systemByte & 0xff);
+		arr[8] =(byte) (systemByte >> 8);
+		arr[7] =(byte) (systemByte >> 16);
+		arr[6] =(byte) (systemByte >> 24);
 		
 		return arr;
 		
