@@ -14,7 +14,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="900.0" scaleShape="false" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ran.controller.MainWindowController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="900.0" scaleShape="false" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ran.controller.MainWindowController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -36,14 +36,27 @@
                <center>
                   <TextArea fx:id="txtAreaSender" prefHeight="392.0" prefWidth="446.0" BorderPane.alignment="CENTER" />
                </center>
+               <top>
+                  <Label text="ReadyForSend" BorderPane.alignment="CENTER" />
+               </top>
             </BorderPane>
             <BorderPane>
-               <bottom>
-                  <TextArea fx:id="txtAreaConsole" prefHeight="91.0" prefWidth="446.0" BorderPane.alignment="CENTER" />
-               </bottom>
                <center>
                   <TextArea fx:id="txtAreaReciver" prefHeight="333.0" prefWidth="446.0" BorderPane.alignment="CENTER" />
                </center>
+               <bottom>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <center>
+                        <TextArea fx:id="txtAreaConsole" prefHeight="91.0" prefWidth="446.0" BorderPane.alignment="CENTER" />
+                     </center>
+                     <top>
+                        <Label text="Console" BorderPane.alignment="CENTER" />
+                     </top>
+                  </BorderPane>
+               </bottom>
+               <top>
+                  <Label text="Transcation" BorderPane.alignment="CENTER" />
+               </top>
             </BorderPane>
          </items>
     </SplitPane>
@@ -51,19 +64,24 @@
       <children>
             <BorderPane HBox.hgrow="ALWAYS">
                <left>
-              <Label fx:id="lblConnectionInfo" maxWidth="-1.0" text="127.0.0.1:5000 &lt;-&gt; 127.0.0.1:6000" BorderPane.alignment="CENTER">
+              <Label fx:id="lblConnectionInfo" maxWidth="-1.0" text="PASSIVE:127.0.0.1:5000 &lt;-&gt; 127.0.0.1:6000" BorderPane.alignment="CENTER">
                      <font>
                   <Font size="11.0" fx:id="x3" />
                      </font>
                      <textFill>
-                  <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
+                  <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
                      </textFill>
                   </Label>
                </left>
                <right>
-                  <SplitPane dividerPositions="0.5" BorderPane.alignment="CENTER">
+                  <SplitPane dividerPositions="0.5, 0.5" BorderPane.alignment="CENTER">
                      <items>
-                        <Button fx:id="btnConnect" graphicTextGap="3.0" mnemonicParsing="false" onAction="#doConnect" prefHeight="3.0" prefWidth="64.0" text="Connect">
+                        <Button fx:id="btnConnect" graphicTextGap="3.0" mnemonicParsing="false" onAction="#btnConnect" prefHeight="3.0" prefWidth="64.0" text="Connect">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnClose" graphicTextGap="3.0" mnemonicParsing="false" onAction="#btnConnect" prefHeight="3.0" prefWidth="64.0" text="Close">
                            <font>
                               <Font size="9.0" />
                            </font>

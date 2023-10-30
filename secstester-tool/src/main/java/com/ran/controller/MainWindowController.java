@@ -190,7 +190,7 @@ public class MainWindowController implements Initializable {
 	}
 
 	public void showSettingView(Event event) throws IOException {
-		Main.showView(SettingView.class, Modality.NONE);
+		Main.showView(SettingView.class, Modality.WINDOW_MODAL);
 
 	}
 
@@ -198,17 +198,88 @@ public class MainWindowController implements Initializable {
 
 	}
 
-	public void doConnect(Event event) {
+	public void doDisConnect(ConnectionMode mode) {
+		if (mode == ConnectionMode.PASSIVE) {
+			if(serverHandle.serverStop()) {
+				btnConnect.setText("Connect");
+				lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+			}
+			
+			}else {
+				if(clientHandle.clientClose()) {
+					btnConnect.setText("Connect");
+					lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+				}
+				
+			}
+	}
+	
+	public void doConnect(ConnectionMode mode) {
+		try {
+		if (mode == ConnectionMode.PASSIVE) {
+			if (!serverHandle.serverIsOpen())
+				serverHandle.serverBoot(Integer.parseInt(configBean.getInnerConfig().getPortLocal()));
 
+		}else {
+			
+				clientHandle.clientBoot(configBean.getInnerConfig().getIpRemote(),
+						Integer.parseInt(configBean.getInnerConfig().getPortRemote()));
+
+		}
+		btnConnect.setText("WAIT");
+		lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Operation fail.");
+		}
+	}
+	
+	
+	public void btnClose(Event event) {
+		
+		String btnText = btnConnect.getText();
+		
+		ConnectionMode mode = configBean.getInnerConfig().getConnectionMode();
+		doDisConnect(mode);
+	}
+	
+	public void btnConnect(Event event) {
+		//TEXT DisConnect WAIT Connect
+		String btnText = btnConnect.getText();
+		
+		ConnectionMode mode = configBean.getInnerConfig().getConnectionMode();
+		//doConnect(mode);
 		// Server serverHandle = Server.getInstance();
-		if (!serverHandle.serverIsOpen()) {
+		
+		switch(btnText) {
+		case "DisConnect":
+			doDisConnect(mode);
+			break;
+		case "WAIT":
+			//just wait - -.
+			doDisConnect(mode);
+			btnConnect.setText("Connect");
+			lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
+			break;
+		case "Connect":
+			doConnect(mode);
+			break;
+			
+			default:break;
+		
+		}
+		
+		/*
 			try {
-				ConnectionMode mode = configBean.getInnerConfig().getConnectionMode();
+				
 				if (mode == ConnectionMode.PASSIVE) {
 					// passive
+					if (!serverHandle.serverIsOpen())
 					serverHandle.serverBoot(Integer.parseInt(configBean.getInnerConfig().getPortLocal()));
 
+					
 				} else {// active
+					if (!clientHandle.clientIsOpen())
 					clientHandle.clientBoot(configBean.getInnerConfig().getIpRemote(),
 							Integer.parseInt(configBean.getInnerConfig().getPortRemote()));
 
@@ -218,7 +289,7 @@ public class MainWindowController implements Initializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			btnConnect.setText("DIS");
+			btnConnect.setText("WAIT");
 			lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
 		} else {
 
@@ -226,7 +297,7 @@ public class MainWindowController implements Initializable {
 			btnConnect.setText("Connect");
 			lblConnectionInfo.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));
 		}
-
+*/
 	}
 
 	public void changeConnectStatus(String mark) {
@@ -347,6 +418,11 @@ public class MainWindowController implements Initializable {
 			}
 
 		});
+		
+		Main.getStage().setOnCloseRequest(event -> {
+		    // 窗口关闭事件处理代码
+			System.exit(0);
+		});
 
 		configBean.getInnerConfig().addPropertyChangeListener(lister);
 
@@ -359,7 +435,7 @@ public class MainWindowController implements Initializable {
 		// TODO Auto-generated method stub
 		Platform.runLater(() -> {
 			configBean.getInnerConfig();
-			String tmp = configBean.getInnerConfig().getIpLocal() + ":" + configBean.getInnerConfig().getPortLocal()
+			String tmp =configBean.getInnerConfig().getConnectionMode()+":"+ configBean.getInnerConfig().getIpLocal() + ":" + configBean.getInnerConfig().getPortLocal()
 					+ " <-> " + configBean.getInnerConfig().getIpRemote() + ":"
 					+ configBean.getInnerConfig().getPortRemote();
 

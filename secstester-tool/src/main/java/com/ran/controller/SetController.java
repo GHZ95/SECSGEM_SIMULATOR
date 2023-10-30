@@ -17,6 +17,8 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -37,8 +39,7 @@ public class SetController  implements Initializable{
 	
 	@FXML
 	private TextField txtSwVersion;
-	
-	
+
 	@FXML
 	private TextField txtT3Timer;
 	
@@ -74,6 +75,8 @@ public class SetController  implements Initializable{
     	
     	configBean.setInnerConfig(config);
     	
+    	Stage stage= (Stage)txtT3Timer.getScene().getRoot().getScene().getWindow();
+    	stage.close();
     	return false;
     }
     

@@ -26,5 +26,5 @@ logging:
 javafx:
     stage:
         resizable: true
-    title: EMT
+    title: SECS/GEM Simulator by Ran.
 

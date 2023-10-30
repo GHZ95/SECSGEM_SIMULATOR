@@ -18,10 +18,12 @@ public class Client {
 	@Autowired
 	ChannelHandler channelHandler;
 	
+	AsynchronousSocketChannel socketChannel;
+	
 	 public void clientBoot(String ip,int port) throws IOException {
 
 	        // 创建 Client
-	        AsynchronousSocketChannel socketChannel = AsynchronousSocketChannel.open();
+	        socketChannel = AsynchronousSocketChannel.open();
 	        // 与 Server 连接
 	      
 	        	Attachment att = new Attachment();
@@ -69,5 +71,21 @@ public class Client {
  
 		 
 		 
+	 }
+	 
+	 public boolean clientIsOpen() {
+		 return socketChannel.isOpen();
+	 }
+	 
+	 public boolean clientClose() {
+		 try {
+			 if(socketChannel!=null && socketChannel.isOpen())
+			socketChannel.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		 return true;
 	 }
 }

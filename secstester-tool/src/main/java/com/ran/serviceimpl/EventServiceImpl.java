@@ -29,6 +29,24 @@ public class EventServiceImpl implements EventService{
 	@Override
 	public boolean handleS1F1(SecsEvent event) {
 		// TODO Auto-generated method stub
+		Queue<String> strQueue = new LinkedBlockingQueue<String>();
+		strQueue.add("List:2");
+		strQueue.add("A["+configBean.getInnerConfig().getMDLN().length()+"]:"+configBean.getInnerConfig().getMDLN());
+		strQueue.add("A["+configBean.getInnerConfig().getSwVer().length()+"]:"+configBean.getInnerConfig().getSwVer());
+		SECSMsg secsMsg = new SECSMsg();
+		SECSBody body = new SECSBody();
+		SECSHeader header = buildHeader(event);
+		
+		Queue<String> copyQueue = new LinkedBlockingQueue<String>(strQueue);
+		body.setOriginQueue(copyQueue);
+
+		LinkSecsItem secsBody =SECSMsgUtil.getInstance().buildSecs(strQueue);
+		body.setRootItem(secsBody);
+		secsMsg.setBody(body);
+		secsMsg.setHeader(header);
+
+		
+		msgBridgeImpl.sendMsg(secsMsg);
 		return false;
 	}
 
@@ -112,6 +130,30 @@ public class EventServiceImpl implements EventService{
 		
 		return header;
 		
+	}
+
+	@Override
+	public boolean handleS6F11(SecsEvent event) {
+		// TODO Auto-generated method stub
+		Queue<String> strQueue = new LinkedBlockingQueue<String>();
+		strQueue.add("BOOL:0");
+		SECSMsg secsMsg = new SECSMsg();
+		SECSBody body = new SECSBody();
+		SECSHeader header = buildHeader(event);
+		
+		Queue<String> copyQueue = new LinkedBlockingQueue<String>(strQueue);
+		body.setOriginQueue(copyQueue);
+
+		LinkSecsItem secsBody =SECSMsgUtil.getInstance().buildSecs(strQueue);
+		body.setRootItem(secsBody);
+		secsMsg.setBody(body);
+		secsMsg.setHeader(header);
+
+		
+		msgBridgeImpl.sendMsg(secsMsg);
+		
+		
+		return false;
 	}
 
 }

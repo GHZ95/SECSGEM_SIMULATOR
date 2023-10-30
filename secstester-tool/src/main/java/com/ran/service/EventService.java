@@ -10,4 +10,5 @@ public interface EventService {
 	
 	boolean handleS1F13(SecsEvent event);
 
+	boolean handleS6F11(SecsEvent event);
 }

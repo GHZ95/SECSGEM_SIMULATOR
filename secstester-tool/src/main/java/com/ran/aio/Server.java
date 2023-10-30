@@ -41,7 +41,7 @@ public class Server {
         return singleton;
     }
 
-    public void serverStop() {
+    public boolean serverStop() {
     	
     	if(serverSocket!=null || serverSocket.isOpen()) {
     		try {
@@ -51,8 +51,10 @@ public class Server {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return false;
 			}	
     	}
+    	return true;
     }
 
     

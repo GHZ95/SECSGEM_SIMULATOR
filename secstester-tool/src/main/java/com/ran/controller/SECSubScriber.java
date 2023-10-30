@@ -84,6 +84,7 @@ public class SECSubScriber  extends Subscriber<SecsEvent>   {
 		case 1:
 			switch (header.getFunctionNo()) {
 			case 1:
+				eventService.handleS1F1(event);
 				break;
 			case 13:
 				eventService.handleS1F13(event);
@@ -99,6 +100,7 @@ public class SECSubScriber  extends Subscriber<SecsEvent>   {
 		case 6:
 			switch (header.getFunctionNo()) {
 			case 11:
+				eventService.handleS6F11(event);
 				break;
 				default:
 					break;
