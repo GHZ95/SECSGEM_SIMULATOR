@@ -61,6 +61,14 @@ public class SECSubScriber  extends Subscriber<SecsEvent>   {
 		case DataMessage:
 			dataMessageHandle(event);
 			break;
+			
+		case LinkTestReq:
+			sendLinkTestRsp(event);
+			break;
+			
+		case LinkTestRsp:
+			
+			break;
 			default:
 				break;
 		}
@@ -75,6 +83,14 @@ public class SECSubScriber  extends Subscriber<SecsEvent>   {
 				event.getMsg().getHeader().getBinArr());
 		if(rtnFlag)
 			configBean.getInnerConfig().setConnectionStatus("CONN");
+	}
+	
+	private void sendLinkTestRsp(SecsEvent event) {
+		// TODO Auto-generated method stub
+		//Server.getInstance().getChannelHandler().writeChannelForTest(event.getMsg().getHeader().getBinArr());
+		boolean rtnFlag = serverHandle.getChannelHandler().writeChannelForReplyLinkTest(
+				event.getMsg().getHeader().getBinArr());
+
 	}
 
 	private void dataMessageHandle(SecsEvent event) {

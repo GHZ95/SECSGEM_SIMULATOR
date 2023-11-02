@@ -1,12 +1,18 @@
 package com.ran.controller;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Queue;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,11 +31,10 @@ import com.ran.aio.SECSMsgUtil;
 import com.ran.aio.Server;
 import com.ran.aio.SessionType;
 import com.ran.bean.ConnectionMode;
-import com.ran.bean.EAPConfig;
 import com.ran.bean.MsgType;
 import com.ran.cpmt.ConfigBean;
 import com.ran.cpmt.ConfigChangeListener;
-import com.ran.cpmt.OutputStreamByTextArea;
+import com.ran.cpmt.RowConstrain;
 import com.ran.cpmt.SenderMenu;
 import com.ran.river.NotifyBus;
 import com.ran.service.MsgBridge;
@@ -41,6 +46,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -52,6 +59,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.Background;
@@ -60,6 +69,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.util.Duration;
+
 
 @FXMLController
 public class MainWindowController implements Initializable {
@@ -121,33 +131,29 @@ public class MainWindowController implements Initializable {
 	private Environment ev;
 
 	public void showMainArea(String context, MsgType msgType) {
-		Text text = new Text();
-		switch (msgType) {
-		case NORMAL: {
-			text.setStyle("-fx-fill: #0000FF;");
-			break;
-		}
-		case WARNING: {
-			text.setStyle("-fx-fill: #EE7700;");
-			break;
-		}
-		case ERROR: {
-			text.setStyle("-fx-fill: #CC0000;-fx-font-weight:bold;");
-			break;
-		}
+		//Text text = new Text();
+		Platform.runLater(() -> {
 
-		default:
-			break;
+			String tmp = txtAreaReciver.getText();
+			int rowNum = tmp.split("\n").length;
+			if(rowNum>1000) {
+		
+					txtAreaReciver.clear();
+					//txtAreaReciver.sett(tmp.substring(tmp.indexOf("\n")+1));
+					txtAreaReciver.setText(tmp.substring(tmp.indexOf("\n")+1));
+			}
+			
+		
+		txtAreaReciver.appendText(LocalDateTime.now().toString() + " " + context + System.lineSeparator());
 
-		}
-
-		if (msgType == MsgType.NONE) {
-			text.setText(System.lineSeparator());
-		} else
-			text.setText(LocalDateTime.now().toString() + " " + context + System.lineSeparator());
-
-		txtAreaReciver.appendText(context);
 		txtAreaReciver.setScrollTop(Double.MAX_VALUE);
+
+		
+		});
+		
+		
+		
+	
 		// sp.setVvalue(1.0);
 		// slowScrollToBottom(sp);
 	}
@@ -320,6 +326,7 @@ public class MainWindowController implements Initializable {
 
 	private void secsSend(ActionEvent event) {
 		// TODO Auto-generated method stub
+		try {
 		int from = txtAreaSender.getCaretPosition();
 		// txtAreaSender.selectRange(from, to);
 		String wholeStr = txtAreaSender.getText();
@@ -372,7 +379,7 @@ public class MainWindowController implements Initializable {
 			SECSMsg secsMsg = new SECSMsg();
 			// header
 			SECSHeader header = new SECSHeader();
-			header.setDeviceId(0);
+			header.setDeviceId(Integer.parseInt(configBean.getInnerConfig().getDeviceId()));
 			header.setFunctionNo(functionNo);
 			header.setNeedReply(needReply);
 			header.setpType(null);
@@ -394,6 +401,10 @@ public class MainWindowController implements Initializable {
 
 			msgBridgeImpl.sendMsg(secsMsg);
 
+		}}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getLocalizedMessage());
+			
 		}
 
 	}
@@ -426,11 +437,122 @@ public class MainWindowController implements Initializable {
 
 		configBean.getInnerConfig().addPropertyChangeListener(lister);
 
+		/*
 		PrintStream ps = new PrintStream(new OutputStreamByTextArea(txtAreaConsole));
 		System.setOut(ps);
 		System.setErr(ps);
+		*/
+		/*
+		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+		int initialDelay = 0; // 初始延迟时间为0秒
+		int period = 1000; // 间隔时间为50 ms
+
+		scheduler.scheduleAtFixedRate(()->{
+			Platform.runLater(() -> {
+			String transTxt = txtAreaReciver.getText();
+			   if(transTxt.split("\n").length>1000){
+                   int start = transTxt.indexOf("\n")+1;
+                   //txtAreaReciver.setText(transTxt.substring(start));
+                   txtAreaReciver.setText("");
+                   txtAreaReciver.setText(transTxt.substring(start));
+                   
+               }
+			   transTxt=null;
+			});
+		}, initialDelay, period, TimeUnit.MILLISECONDS);
+		
+	*/
+		
+		
+		
+		
+		
+		/*
+		txtAreaConsole.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            	try {
+                if(newValue.split("\n").length>1000){
+                    int start = newValue.indexOf("\n")+1;
+                    txtAreaConsole.setText(newValue.substring(start));
+                    txtAreaConsole.setScrollTop(Double.MAX_VALUE);  // 让滚动条保留在最后面
+                }
+            	}catch(Exception e) {
+                logger.error(e.getMessage());	
+                throw e;
+                }
+            }
+        });*/ 
+		/*
+		txtAreaReciver.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            	try {
+            	String localTmp = newValue;
+            		Platform.runLater(() -> {
+            		
+                if(localTmp.split("\n").length>1000){
+                    int start = localTmp.indexOf("\n")+1;
+                    txtAreaReciver.textProperty().set(localTmp.substring(start));
+                    txtAreaReciver.setScrollTop(Double.MAX_VALUE);  // 让滚动条保留在最后面
+                }
+                });
+            	}catch(Exception e) {
+                logger.error(e.getMessage());	
+                throw e;
+                }finally {
+                	oldValue=null;
+                	newValue=null;
+                	observable=null;
+                }
+            }
+        }); 
+		*/
+		
+		/*
+		UnaryOperator<Change> unaryOperator = new RowConstrain();
+		TextFormatter<String> tmpTextFormatter = new TextFormatter<String>(unaryOperator);
+		txtAreaReciver.setTextFormatter(tmpTextFormatter);
+		*/
+		
+		/*
+		  Pattern newline = Pattern.compile("\n");
+		  
+		  txtAreaReciver.setTextFormatter(new TextFormatter<String>(change ->  {
+			  
+	            String newText = change.getControlNewText();
+
+	            // count lines in proposed new text:
+	            Matcher matcher = newline.matcher(newText);
+	            int lines = 1 ;
+	            
+	            //while (matcher.find()) lines++;
+
+	            lines = newText.split("\n").length;
+	            
+	            // if there aren't too many lines just return the changed unmodified:
+	            if (lines <= 100) return change ;
+
+	            // drop first (lines - 50) lines and replace all text
+	            // (there's no other way AFAIK to drop text at the beginning 
+	            // and replace it at the end):
+	            int linesToDrop = lines - 1000 ;
+	            int index = 0 ; 
+	            for (int i = 0 ; i < linesToDrop ; i++) {
+	                index = newText.indexOf('\n', index) ;
+	            }
+	            change.setRange(0, change.getControlText().length());
+	            change.setText(newText.substring(index+1));
+
+	            
+	            return null  ;
+			 
+	        }));*/
+		
+	
 	}
 
+	
 	public void changeIpStr() {
 		// TODO Auto-generated method stub
 		Platform.runLater(() -> {

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
@@ -12,6 +15,7 @@ public class OutputStreamByTextArea extends OutputStream {
 
 	   private TextArea console;
 
+
        public OutputStreamByTextArea(TextArea console) {
            this.console = console;
        }
@@ -19,8 +23,8 @@ public class OutputStreamByTextArea extends OutputStream {
        public void appendText(String valueOf) {
            Platform.runLater(() -> {
           
-           Text text = new Text();
-           text.setText(LocalDateTime.now().toString() + " " + valueOf + System.lineSeparator());		   
+           //Text text = new Text();
+           //text.setText(LocalDateTime.now().toString() + " " + valueOf + System.lineSeparator());		   
            //console.appendText(valueOf)
            console.appendText(valueOf);
            console.setScrollTop(Double.MAX_VALUE);

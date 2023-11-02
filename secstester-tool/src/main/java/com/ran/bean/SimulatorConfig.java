@@ -29,7 +29,7 @@ public class SimulatorConfig {
 		ipLocal = "127.0.0.1";
 		ipRemote="127.0.0.1";
 		portLocal = "5000";
-		portRemote = "6000";
+		portRemote = "5000";
 		deviceId = "0";
 		t3Timer = "45";
 		MDLN = "R.A.N";

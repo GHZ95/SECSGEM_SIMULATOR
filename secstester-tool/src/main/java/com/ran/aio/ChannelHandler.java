@@ -300,7 +300,69 @@ public class ChannelHandler implements CompletionHandler<Integer, Attachment> {
 		buffer.put(replySelect);
 		((Buffer) buffer).flip();
 
-		System.out.println();
+		while (buffer.hasRemaining()) {
+			Future<Integer> future = channel.write(buffer);
+
+			try {
+				int w = future.get().intValue();
+
+				if (w <= 0) {
+					System.out.println("Future =" + w);
+					rtnFlag = false;
+				}
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				rtnFlag = false;
+			}
+		}
+		return rtnFlag;
+	}
+	
+	public boolean writeChannelForReplyLinkTest(byte[] arr) {
+
+		boolean rtnFlag = true;
+		AsynchronousSocketChannel channel = attachment.getClient();
+		ByteBuffer buffer = ByteBuffer.allocate(14);
+		long len = 10L;
+
+		buffer.put((byte) (len >> 24));
+		buffer.put((byte) (len >> 16));
+		buffer.put((byte) (len >> 8));
+		buffer.put((byte) (len));
+
+		byte replySelect[] = new byte[10];
+		for (int i = 0; i < arr.length; i++) {
+
+			switch (i) {
+			case 0:
+			case 1:
+				replySelect[i] = (byte) 0xFF;
+				break;
+			case 2:
+				replySelect[i] = (byte) 0x0;
+				break;
+			case 3:
+				replySelect[i] = (byte) 0x0;
+				break;
+			case 4:
+				replySelect[i] = (byte) 0;
+				break;
+			case 5:
+				replySelect[i] = (byte) 6;
+				break;
+
+			default:
+				replySelect[i] = arr[i];
+				break;
+			}
+			System.out.print(bytes2HexString(replySelect[i]));
+
+		}
+
+		buffer.put(replySelect);
+		((Buffer) buffer).flip();
+
 		while (buffer.hasRemaining()) {
 			Future<Integer> future = channel.write(buffer);
 

@@ -26,6 +26,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
+		
+
 		<!--    <dependency>
       <groupId>de.roskenet</groupId>
       <artifactId>springboot-javafx-support</artifactId>
@@ -54,17 +56,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>de.roskenet</groupId>
 			<artifactId>springboot-javafx-support</artifactId>
 			<version>${springboot-javafx.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>com.onlyxiahui.app</groupId>
-			<artifactId>only-app-fx</artifactId>
-			<version>1.0.0</version>
-		</dependency>
+		
 
 
 	</dependencies>
