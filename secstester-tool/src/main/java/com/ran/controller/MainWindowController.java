@@ -1,18 +1,15 @@
 package com.ran.controller;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.Queue;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,7 +31,7 @@ import com.ran.bean.ConnectionMode;
 import com.ran.bean.MsgType;
 import com.ran.cpmt.ConfigBean;
 import com.ran.cpmt.ConfigChangeListener;
-import com.ran.cpmt.RowConstrain;
+import com.ran.cpmt.OutputStreamByTextArea;
 import com.ran.cpmt.SenderMenu;
 import com.ran.river.NotifyBus;
 import com.ran.service.MsgBridge;
@@ -46,8 +43,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -59,8 +54,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.Background;
@@ -78,6 +71,8 @@ public class MainWindowController implements Initializable {
 	private TreeView<String> eapTreeView;
 
 	private final static Logger logger = LoggerFactory.getLogger("recommend");
+	
+    private final int MAX_LINES = 1000 ;
 
 	@Autowired
 	private ConfigBean configBean;
@@ -129,29 +124,41 @@ public class MainWindowController implements Initializable {
 
 	@Autowired
 	private Environment ev;
+	
+	private StringBuffer mainStringBuffer;
+	
+	private int preCount ;
 
 	public void showMainArea(String context, MsgType msgType) {
 		//Text text = new Text();
+		/*
 		Platform.runLater(() -> {
 
-			String tmp = txtAreaReciver.getText();
-			int rowNum = tmp.split("\n").length;
-			if(rowNum>1000) {
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String tmp = txtAreaReciver.getText().intern();
+			String arr[] = tmp.split("\n");
+			
+			if(arr.length>1000) {
 		
 					txtAreaReciver.clear();
 					//txtAreaReciver.sett(tmp.substring(tmp.indexOf("\n")+1));
-					txtAreaReciver.setText(tmp.substring(tmp.indexOf("\n")+1));
+					txtAreaReciver.setText(tmp.substring(tmp.indexOf("\n")+1).intern());
 			}
 			
-		
+			arr = null;tmp=null;
 		txtAreaReciver.appendText(LocalDateTime.now().toString() + " " + context + System.lineSeparator());
 
 		txtAreaReciver.setScrollTop(Double.MAX_VALUE);
 
 		
 		});
-		
-		
+		*/
+		mainStringBuffer.append(LocalDateTime.now().toString() + " " + context + System.lineSeparator());
 		
 	
 		// sp.setVvalue(1.0);
@@ -437,35 +444,105 @@ public class MainWindowController implements Initializable {
 
 		configBean.getInnerConfig().addPropertyChangeListener(lister);
 
-		/*
+		
 		PrintStream ps = new PrintStream(new OutputStreamByTextArea(txtAreaConsole));
 		System.setOut(ps);
 		System.setErr(ps);
-		*/
+		
+		
+		
+		preCount = 0;
+		mainStringBuffer = new StringBuffer();
+	
+		
 		/*
-		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-		int initialDelay = 0; // 初始延迟时间为0秒
-		int period = 1000; // 间隔时间为50 ms
+		Task task =new Task() {
 
-		scheduler.scheduleAtFixedRate(()->{
-			Platform.runLater(() -> {
-			String transTxt = txtAreaReciver.getText();
-			   if(transTxt.split("\n").length>1000){
-                   int start = transTxt.indexOf("\n")+1;
-                   //txtAreaReciver.setText(transTxt.substring(start));
-                   txtAreaReciver.setText("");
-                   txtAreaReciver.setText(transTxt.substring(start));
-                   
-               }
-			   transTxt=null;
-			});
-		}, initialDelay, period, TimeUnit.MILLISECONDS);
+			@Override
+			protected Object call() throws Exception {
+				// TODO Auto-generated method stub
+				
+				return null;
+			}
+
+			
+			
+			@Override
+			protected void running() {
+				// TODO Auto-generated method stub
+	
+				if(mainStringBuffer.length()!=preCount) {
+					preCount = mainStringBuffer.length();
+					 Pattern newline = Pattern.compile("\n");
+					 Matcher matcher = newline.matcher(mainStringBuffer);
+			         int lines = 1 ;
+			         while (matcher.find()) lines++;
+					if(lines>MAX_LINES) {
+						int linesToDrop = lines - MAX_LINES ;
+			            int index = 0 ; 
+			            for (int i = 0 ; i < linesToDrop ; i++) {
+			                //index = mainStringBuffer.indexOf(System.lineSeparator(), index) ;
+			            	index = mainStringBuffer.indexOf("\r", index+1) ;
+			            }
+			            mainStringBuffer = mainStringBuffer.delete(0, index);
+					}
+					
+				
+				txtAreaReciver.setText(mainStringBuffer.toString());
+				txtAreaReciver.setScrollTop(Double.MAX_VALUE);
+			}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+		task.run();
 		
+		
+		
+		
+			ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+			int initialDelay = 0; // 初始延迟时间为0秒
+			int period = 100; // 间隔时间为50 ms
+
+			scheduler.scheduleAtFixedRate(task, initialDelay, period,  TimeUnit.MILLISECONDS);
 	*/
+			
+			
+			
+		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+		int initialDelay = 0; 
+		int period = 100;  
+		scheduler.scheduleAtFixedRate(()->{
+			//get string from stringbuffer.
+			//judge length
+			//preCount = mainStringBuffer.length()!=preCount?mainStringBuffer.length():preCount;
+			if(mainStringBuffer.length()!=preCount) {
+				preCount = mainStringBuffer.length();
+				 Pattern newline = Pattern.compile("\n");
+				 Matcher matcher = newline.matcher(mainStringBuffer);
+		         int lines = 1 ;
+		         while (matcher.find()) lines++;
+				if(lines>MAX_LINES) {
+					int linesToDrop = lines - MAX_LINES ;
+		            int index = 0 ; 
+		            for (int i = 0 ; i < linesToDrop ; i++) {
+		                //index = mainStringBuffer.indexOf(System.lineSeparator(), index) ;
+		            	index = mainStringBuffer.indexOf("\r", index+1) ;
+		            }
+		            mainStringBuffer = mainStringBuffer.delete(0, index);
+				}
+				Platform.runLater(() -> {
+				txtAreaReciver.setText(mainStringBuffer.toString());
+				txtAreaReciver.setScrollTop(Double.MAX_VALUE);
+
+				});
+			}}, initialDelay, period, TimeUnit.MILLISECONDS); 
 		
-		
-		
-		
+	
 		
 		/*
 		txtAreaConsole.textProperty().addListener(new ChangeListener<String>() {

@@ -58,6 +58,7 @@ public class ChannelHandler implements CompletionHandler<Integer, Attachment> {
 
 			SECSHeader secsHeader = SECSMsgUtil.getInstance().buildSecsHeader(headBytes);
 
+			
 			for (byte i : headBytes) {
 
 				System.out.print(bytes2HexString(i));
@@ -357,9 +358,9 @@ public class ChannelHandler implements CompletionHandler<Integer, Attachment> {
 				break;
 			}
 			System.out.print(bytes2HexString(replySelect[i]));
-
+			
 		}
-
+		System.out.println();
 		buffer.put(replySelect);
 		((Buffer) buffer).flip();
 
